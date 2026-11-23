@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101c35">
+  <title>ClassRoom Finder | IIIT Bhopal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="ClassRoom Finder home">
+      <span class="brand-mark">CF</span>
+      <span><strong>ClassRoom Finder</strong><small>IIIT Bhopal · Campus utility</small></span>
+    </a>
+    <nav>
+      <button class="nav-btn active" data-view="student">Find a room</button>
+      <button class="nav-btn" data-view="admin">Admin</button>
+      <a class="nav-link" href="#about">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> CAMPUS SPACE DIRECTORY</div>
+        <h1>Find a space.<br><em>Make it productive.</em></h1>
+        <p>Search room locations listed in the Sep–Dec 2026 first-year timetable and review timetable-based room references.</p>
+        <div class="hero-meta">
+          <span>FoCP · CSE-1003</span><span>Software project</span><span>Prototype</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-top"><span>YOUR PROJECT</span><span class="live-dot"></span></div>
+        <div class="hero-stat"><strong id="heroRoomCount">5</strong><span>timetable locations loaded</span></div>
+        <div class="hero-foot">Room list transcribed from your uploaded timetable. Capacity and live occupancy are not provided.</div>
+      </div>
+    </section>
+
+    <section class="identity-strip">
+      <div><small>PROJECT BY</small><strong id="studentName">YOUR NAME</strong></div>
+      <div><small>SCHOLAR NUMBER</small><strong id="scholarNumber">ADD BEFORE PUBLISHING</strong></div>
+      <div><small>COURSE</small><strong>FoCP (CSE-1003)</strong></div>
+      <button class="text-button" id="editIdentity">Edit details</button>
+    </section>
+
+    <section id="studentView" class="view">
+      <div class="section-heading">
+        <div><div class="eyebrow dark">STUDENT DASHBOARD</div><h2>Explore classrooms</h2><p>Browse rooms and check first-year timetable-based availability for a selected day and time.</p></div>
+        <div class="updated-label">Data saved in this browser</div>
+      </div>
+
+      <div class="availability-panel">
+        <div><div class="eyebrow dark">TIMETABLE AVAILABILITY</div><h3>Check a room by day and time</h3><p>Calculated from the first-year Sep–Dec 2026 timetable you uploaded. It does not include other-year classes or unscheduled bookings.</p></div>
+        <div class="availability-controls">
+          <label>Day<select id="daySelect"><option value="MON">Monday</option><option value="TUE">Tuesday</option><option value="WED">Wednesday</option><option value="THU">Thursday</option><option value="FRI">Friday</option></select></label>
+          <label>Time<select id="timeSelect"><option value="9">9:00–10:00 AM</option><option value="10">10:00–11:00 AM</option><option value="11">11:00 AM–12:00 PM</option><option value="12">12:00–1:00 PM</option><option value="13">1:00–2:00 PM</option><option value="14">2:00–3:00 PM</option><option value="15">3:00–4:00 PM</option><option value="16">4:00–5:00 PM</option><option value="17">5:00–6:00 PM</option></select></label>
+        </div>
+        <div class="availability-summary" id="availabilitySummary" aria-live="polite"></div>
+      </div>
+      <div class="filter-panel">
+        <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search room, building or note…"></label>
+        <label>Building<select id="buildingFilter"><option value="all">All buildings</option><option value="New Teaching Block">New Teaching Block</option><option value="MPSTEP Building">MPSTEP Building</option><option value="Other campus space">Other campus space</option></select></label>
+        <label>Status<select id="statusFilter"><option value="all">All statuses</option><option value="Available">Vacant in first-year timetable</option><option value="Occupied">Occupied</option></select></label>
+        <label>Minimum seats<select id="capacityFilter"><option value="0">Any capacity</option><option value="10">10+</option><option value="20">20+</option><option value="30">30+</option></select></label>
+      </div>
+
+      <div class="summary-row">
+        <div class="summary"><span class="summary-icon green">✓</span><div><strong id="availableCount">0</strong><small>Available</small></div></div>
+        <div class="summary"><span class="summary-icon red">●</span><div><strong id="occupiedCount">0</strong><small>Occupied</small></div></div>
+        <div class="summary"><span class="summary-icon amber">?</span><div><strong id="unknownCount">0</strong><small>Needs update</small></div></div>
+      </div>
+
+      <div class="room-grid" id="roomGrid"></div>
+      <div class="empty-state hidden" id="emptyState"><strong>No matching rooms</strong><p>Try changing your filters.</p></div>
+      <p class="notice"><strong>Timetable note:</strong> Availability is limited to first-year classes visible in your PDF. “Vacant” means no first-year booking is listed for that room and slot; it does not guarantee that the room is unused by other years or reserved for another purpose.  This version adds the room and lab locations identified in your Sep–Dec 2026 timetable (effective 01/09/2026). The PDF assigns rooms within individual lecture cells and some pages say to check each cell. “Vacant” means no first-year booking is listed in the uploaded PDF for that slot; other-year use is not covered. Capacity is not provided in the timetable. Confirm permission with campus staff before using a room.</p>
+    </section>
+
+    <section id="adminView" class="view hidden">
+      <div class="section-heading">
+        <div><div class="eyebrow dark">ADMIN WORKSPACE</div><h2>Manage room information</h2><p>Update room status, notes and the last-checked time. Initial room records come from your uploaded Sep–Dec 2026 timetable.</p></div>
+        <span class="admin-tag">Local demo admin</span>
+      </div>
+      <div id="adminLogin" class="login-card">
+        <div class="login-icon">⌘</div><h3>Administrator sign in</h3>
+        <p>This demo uses a local password only. It is not secure authentication for a public production system.</p>
+        <label>Demo password<input id="adminPassword" type="password" placeholder="Enter demo password"></label>
+        <button class="primary-btn" id="loginBtn">Open admin dashboard</button>
+        <small class="muted">Initial demo password: <code>roomadmin26</code> · Change it in <code>app.js</code> before sharing.</small>
+        <p id="loginError" class="error hidden">Incorrect password. Please try again.</p>
+      </div>
+      <div id="adminPanel" class="hidden">
+        <div class="admin-toolbar"><div><strong>Room directory</strong><small>Changes are saved in this browser only.</small></div><button class="outline-btn" id="logoutBtn">Sign out</button></div>
+        <form id="roomForm" class="editor-card">
+          <h3 id="formTitle">Add a classroom record</h3>
+          <input type="hidden" id="roomId">
+          <div class="form-grid">
+            <label>Room name / number<input id="roomName" required placeholder="e.g. NTB-TC-210"></label>
+            <label>Building<select id="roomBuilding"><option>New Teaching Block</option><option>MPSTEP Building</option><option>Unconfirmed</option></select></label>
+            <label>Floor / area<input id="roomFloor" placeholder="e.g. First floor"></label>
+            <label>Capacity (seats)<input id="roomCapacity" type="number" min="1" placeholder="Unknown if not verified"></label>
+            <label>Status<select id="roomStatus"><option>Unknown</option><option>Available</option><option>Occupied</option><option>Reserved</option></select></label>
+            <label>Last checked<input id="roomChecked" type="datetime-local"></label>
+          </div>
+          <label>Timetable / notes<textarea id="roomNotes" rows="3" placeholder="Add verified schedule information or a note for students."></textarea></label>
+          <div class="form-actions"><button class="primary-btn" type="submit">Save room</button><button class="outline-btn" type="button" id="resetForm">Clear</button></div>
+        </form>
+        <div class="admin-list" id="adminList"></div>
+      </div>
+    </section>
+
+    <section id="about" class="about-section">
+      <div><div class="eyebrow dark">ABOUT THIS PROJECT</div><h2>A practical campus solution</h2><p>ClassRoom Finder is a student-built prototype intended to make room information easier to find. The institute's published annual report describes academic activity primarily in the New Teaching Block and MPSTEP Building and reports 24 classrooms across its facilities. Individual room allocations, current capacity and live timetables must be confirmed with the institute.</p><a href="https://iiitbhopal.ac.in/Document/Important/Annual%20Report%202024-25%2013-03-2026%20Final_11zon.pdf" target="_blank" rel="noopener">View official IIIT Bhopal annual report ↗</a></div>
+      <div class="about-side"><strong>Prototype limitations</strong><ul><li>No automatic occupancy sensors.</li><li>Room names/locations are transcribed from the uploaded Sep–Dec 2026 timetable; this is not a live timetable feed.</li><li>Admin changes are stored in this browser only.</li><li>For shared live data, connect a secure database and server-side authentication.</li></ul></div>
+    </section>
+  </main>
+
+  <footer><span>ClassRoom Finder · FoCP (CSE-1003)</span><span>Built as an academic prototype · Verify room details before use</span></footer>
+
+  <dialog id="identityDialog">
+    <form method="dialog" id="identityForm" class="dialog-form">
+      <button class="dialog-close" value="cancel" aria-label="Close">×</button>
+      <div class="eyebrow dark">PROJECT DETAILS</div><h3>Personalise the homepage</h3>
+      <p>Fill these fields before deployment. Consider whether you want your scholar number visible on a public link.</p>
+      <label>Your name<input id="identityName" placeholder="Enter name"></label>
+      <label>Scholar number<input id="identityScholar" placeholder="Enter scholar number"></label>
+      <div class="form-actions"><button class="primary-btn" id="saveIdentity" value="save">Save details</button><button class="outline-btn" value="cancel">Cancel</button></div>
+    </form>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
